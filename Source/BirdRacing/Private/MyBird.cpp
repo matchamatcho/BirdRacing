@@ -2,6 +2,7 @@
 
 
 #include "MyBird.h"
+#include "BirdSoundComponent.h" // 作成したコンポーネントをインクルード
 #include "Kismet/KismetSystemLibrary.h" //追加
 #include "GameFramework/CharacterMovementComponent.h" //追加
 
@@ -11,6 +12,10 @@ AMyBird::AMyBird()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// サウンドコンポーネントを作成し、アタッチする
+	SoundComponent = CreateDefaultSubobject<UBirdSoundComponent>(TEXT("SoundComponent"));
+
 
 }
 
@@ -103,6 +108,17 @@ void AMyBird::ReleaseBrake()
 	GetCharacterMovement()->Velocity = BoostVelocity;
 
 	BrakeCharge = 0.0f; // チャージをリセット
+
+	// サウンドコンポーネント経由でサウンドを再生
+	if (SoundComponent)
+	{
+		SoundComponent->PlaySound(TEXT("Boost")); // "Boost"という名前でサウンドを再生
+		UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	}
+	else {
+		UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		
+	}
 }
 
 

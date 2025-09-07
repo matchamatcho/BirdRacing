@@ -9,6 +9,7 @@
 // 前方宣言
 class UInputAction;
 class UInputMappingContext;
+class UBirdSoundComponent; // 前方宣言
 
 // キャラクターの状態を表す列挙型
 UENUM(BlueprintType)
@@ -64,5 +65,9 @@ private:
 	float BrakeCharge = 0.0f; // 現在のチャージ量
 	float MaxBrakeCharge = 2.0f; // 最大チャージ時間（秒）
 	float BoostImpulse = 5000.0f; // ブースト時の力
+
+	// サウンドコンポーネントへのポインタ
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UBirdSoundComponent* SoundComponent;
 
 };
