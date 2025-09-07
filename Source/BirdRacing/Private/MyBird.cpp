@@ -34,8 +34,26 @@ void AMyBird::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//UKismetSystemLibrary::PrintString(this, "C++ Hello World!", true, true, FColor::Cyan, 2.f, TEXT("None"));
-	// 常に前進する
-	AddMovementInput(GetActorForwardVector(),m_forwardSpeed);
+	if (bIsBraking)
+	{
+		if (BrakeCharge < MaxBrakeCharge && (BrakeCharge + DeltaTime) >= MaxBrakeCharge){
+			UKismetSystemLibrary::PrintString(this, "ChargeMax!!", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		}
+		// ブレーキ中はチャージを溜める
+		BrakeCharge = FMath::Min(BrakeCharge + DeltaTime, MaxBrakeCharge);
+
+		
+
+		// 現在の速度を徐々に落とす
+		GetCharacterMovement()->Velocity *= 0.98f;
+
+		//UKismetSystemLibrary::PrintString(this, "brake-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	}
+	else
+	{
+		// 常に前進する
+		AddMovementInput(GetActorForwardVector(), m_forwardSpeed);
+	}
 
 	//重力で下に下がる
 	AddMovementInput(-GetActorUpVector(), m_gravity);
@@ -62,6 +80,31 @@ void AMyBird::MoveUp(float Value)
 		//UKismetSystemLibrary::PrintString(this, "C++ Move Up!", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 }
+// ブレーキ開始時に呼び出される関数
+void AMyBird::StartBrake()
+{
+	bIsBraking = true;
+	BrakeCharge = 0.0f; // チャージをリセット
+	UKismetSystemLibrary::PrintString(this, "chargteStart-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+}
+
+// ブレーキ解除時に呼び出される関数
+void AMyBird::ReleaseBrake()
+{
+
+	bIsBraking = false;
+
+	// チャージ量に基づいてブースト力を計算
+	const float BoostScale = FMath::Clamp(BrakeCharge / MaxBrakeCharge, 0.0f, 1.0f);
+	const FVector BoostVelocity = GetActorForwardVector() * BoostImpulse * BoostScale;
+
+	
+	// キャラクターの速度を直接設定して加速させる
+	GetCharacterMovement()->Velocity = BoostVelocity;
+
+	BrakeCharge = 0.0f; // チャージをリセット
+}
+
 
 // Called to bind functionality to input
 void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -74,6 +117,11 @@ void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	// MoveUp軸と MoveUp 関数をバインドする
 	PlayerInputComponent->BindAxis("MoveUp", this, &AMyBird::MoveUp);
+
+	// ブレーキアクションをバインドする
+	PlayerInputComponent->BindAction("Brake", IE_Pressed, this, &AMyBird::StartBrake);
+	PlayerInputComponent->BindAction("Brake", IE_Released, this, &AMyBird::ReleaseBrake);
+
 
 }
 
