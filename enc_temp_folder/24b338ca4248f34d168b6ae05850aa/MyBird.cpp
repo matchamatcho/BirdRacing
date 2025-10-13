@@ -17,6 +17,8 @@ AMyBird::AMyBird()
 	SoundComponent = CreateDefaultSubobject<UBirdSoundComponent>(TEXT("SoundComponent"));
 
 
+
+
 }
 
 // Called when the game starts or when spawned
@@ -91,6 +93,17 @@ void AMyBird::StartBrake()
 	bIsBraking = true;
 	BrakeCharge = 0.0f; // チャージをリセット
 	UKismetSystemLibrary::PrintString(this, "chargteStart-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+
+	// サウンドコンポーネント経由でサウンドを再生
+	if (SoundComponent)
+	{
+		SoundComponent->PlaySound(TEXT("Charge")); // ""という名前でサウンドを再生
+		UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	}
+	else {
+		UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+
+	}
 }
 
 // ブレーキ解除時に呼び出される関数

@@ -5,6 +5,7 @@
 #include "BirdSoundComponent.h" // 作成したコンポーネントをインクルード
 #include "Kismet/KismetSystemLibrary.h" //追加
 #include "GameFramework/CharacterMovementComponent.h" //追加
+#include <string>
 
 
 // Sets default values
@@ -135,6 +136,40 @@ void AMyBird::ReleaseBrake()
 }
 
 
+
+//上下の視点移動
+void AMyBird::LookUp(float Value)
+{
+    // Valueの値を表示
+    //UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("LookUp Value: %f"), Value), true, true, FColor::Cyan, 2.f, TEXT("None"));
+
+	if (Controller)
+	{
+		FRotator ControlRot = Controller->GetControlRotation();
+		FString AngleStr = FString::Printf(TEXT("Pitch: %.2f, Yaw: %.2f, Roll: %.2f"), ControlRot.Pitch, ControlRot.Yaw, ControlRot.Roll);
+		//UKismetSystemLibrary::PrintString(this, AngleStr, true, true, FColor::Yellow, 2.f, TEXT("None"));
+	}
+    if (Value == 0.0f || Controller == nullptr)
+    {
+        return;
+
+    }
+	
+
+    FRotator ControlRot = Controller->GetControlRotation();
+
+    float NewPitch = ControlRot.Pitch + (Value * m_upRotationSpeed);
+    NewPitch = FRotator::NormalizeAxis(NewPitch);
+    NewPitch = FMath::Clamp(NewPitch, -80.0f, 80.0f);
+
+    ControlRot.Pitch = NewPitch;
+    ControlRot.Roll = 0.0f;
+
+    Controller->SetControlRotation(ControlRot);
+	//AddControllerPitchInput(Value * m_upRotationSpeed);
+}
+
+
 // Called to bind functionality to input
 void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -150,6 +185,9 @@ void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// ブレーキアクションをバインドする
 	PlayerInputComponent->BindAction("Brake", IE_Pressed, this, &AMyBird::StartBrake);
 	PlayerInputComponent->BindAction("Brake", IE_Released, this, &AMyBird::ReleaseBrake);
+
+	//上下の視点移動をバインドする
+	PlayerInputComponent->BindAxis("LookUp",this,&AMyBird::LookUp);
 
 
 }

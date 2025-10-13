@@ -55,14 +55,9 @@ public:
 	// 上下の移動を処理する関数の宣言
 	void MoveUp(float Value);
 
-	// 上下の視点移動
-
-	void LookUp(float Value);
-
 private:
 	float m_forwardSpeed = 100.0f; // 前進速度
 	float m_rotationSpeed = 1.0f; // 回転速度
-	float m_upRotationSpeed = 0.5f;//上下の回転速度
 	float m_upSpeed = 100.0f; // 上下移動速度
 	float m_gravity = 10.0f; // 重力の強さ
 
@@ -70,8 +65,6 @@ private:
 	float BrakeCharge = 0.0f; // 現在のチャージ量
 	float MaxBrakeCharge = 2.0f; // 最大チャージ時間（秒）
 	float BoostImpulse = 5000.0f; // ブースト時の力
-
-
 
 	// サウンドコンポーネントへのポインタ
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
