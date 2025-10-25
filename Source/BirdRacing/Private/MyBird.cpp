@@ -192,3 +192,7 @@ void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AMyBird::AddCoin(int32 Amount)
+{
+	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GetCoin: %d"), Amount), true, true, FColor::Cyan, 2.f, TEXT("None"));
+}

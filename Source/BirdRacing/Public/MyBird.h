@@ -59,6 +59,8 @@ public:
 
 	void LookUp(float Value);
 
+	void AddCoin(int32 Amount);
+
 private:
 	float m_forwardSpeed = 100.0f; // 前進速度
 	float m_rotationSpeed = 1.0f; // 回転速度
