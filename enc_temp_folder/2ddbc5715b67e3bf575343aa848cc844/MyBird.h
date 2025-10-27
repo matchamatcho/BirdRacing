@@ -34,8 +34,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// 前に進む関数
-	void MoveForword(float DeltaTime);
 	// ブレーキ開始時に呼び出される関数
 	void StartBrake();
 

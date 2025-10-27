@@ -42,27 +42,15 @@ void AMyBird::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//UKismetSystemLibrary::PrintString(this, "C++ Hello World!", true, true, FColor::Cyan, 2.f, TEXT("None"));
-
-	//直進
-	AMyBird::MoveForword(DeltaTime);
-	
-
-	//重力で下に下がる
-	AddMovementInput(-GetActorUpVector(), m_gravity);
-
-
-}
-void AMyBird::MoveForword(float DeltaTime)
-{
 	if (bIsBraking)
 	{
-		if (BrakeCharge < MaxBrakeCharge && (BrakeCharge + DeltaTime) >= MaxBrakeCharge) {
+		if (BrakeCharge < MaxBrakeCharge && (BrakeCharge + DeltaTime) >= MaxBrakeCharge){
 			UKismetSystemLibrary::PrintString(this, "ChargeMax!!", true, true, FColor::Cyan, 2.f, TEXT("None"));
 		}
 		// ブレーキ中はチャージを溜める
 		BrakeCharge = FMath::Min(BrakeCharge + DeltaTime, MaxBrakeCharge);
 
-
+		
 
 		// 現在の速度を徐々に落とす
 		GetCharacterMovement()->Velocity *= 0.98f;
@@ -74,6 +62,10 @@ void AMyBird::MoveForword(float DeltaTime)
 		// 常に前進する
 		AddMovementInput(GetActorForwardVector(), m_forwardSpeed);
 	}
+
+	//重力で下に下がる
+	AddMovementInput(-GetActorUpVector(), m_gravity);
+
 
 }
 // 左右の回転を処理する関数の実装
