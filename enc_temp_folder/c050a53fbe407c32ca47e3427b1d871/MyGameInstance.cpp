@@ -8,7 +8,7 @@ UMyGameInstance::UMyGameInstance()
 {
 	SelectedStageID = 0;
 	TotalCoins = 0;
-	FName_SelectStage = FName("SelectStages");
+	FName_SelectStage = FName("SelectStage");
 	FName_TitleScreen = FName("Title");
 }
 
@@ -35,8 +35,6 @@ void UMyGameInstance::InitializeDefaultData()
 void UMyGameInstance::LoadStageSelect()
 {
 	UKismetSystemLibrary::PrintString(this, "--------LoadStageSelect()-----------", true, true, FColor::Yellow, 2.f, TEXT("None"));
-	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("Loading Level: %s"), *FName_SelectStage.ToString()), true, true, FColor::Cyan, 5.f, TEXT("None"));
-
 	UGameplayStatics::OpenLevel(this, FName_SelectStage);
 }
 
