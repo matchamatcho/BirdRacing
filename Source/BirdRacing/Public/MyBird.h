@@ -10,6 +10,8 @@
 class UInputAction;
 class UInputMappingContext;
 class UBirdSoundComponent; // 前方宣言
+class UNiagaraComponent; // Niagara エフェクト用
+
 
 // キャラクターの状態を表す列挙型
 UENUM(BlueprintType)
@@ -63,6 +65,16 @@ public:
 
 	void AddCoin(int32 Amount);
 
+	// ブレーキ/ブーストパラメータ
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement|Brake")
+	float MaxBrakeCharge = 0.5f; // 最大チャージ時間（秒）
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement|Brake", meta = (ClampMin = "0.0", ClampMax = "10000.0"))
+	float BoostImpulse = 5000.0f; // ブースト時の力
+
+	// ブーストエフェクトコンポーネント
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Effects", meta = (AllowPrivateAccess = "true"))
+	UNiagaraComponent* BoostEffect;
+
 private:
 	float m_forwardSpeed = 100.0f; // 前進速度
 	float m_rotationSpeed = 1.0f; // 回転速度
@@ -72,8 +84,9 @@ private:
 
 	bool bIsBraking = false; // ブレーキ中かどうかのフラグ
 	float BrakeCharge = 0.0f; // 現在のチャージ量
-	float MaxBrakeCharge = 2.0f; // 最大チャージ時間（秒）
-	float BoostImpulse = 5000.0f; // ブースト時の力
+	//float MaxBrakeCharge = 0.5f; // 最大チャージ時間（秒）
+	//float BoostImpulse = 5000.0f; // ブースト時の力
+	bool m_maxCharged = false;
 
 
 

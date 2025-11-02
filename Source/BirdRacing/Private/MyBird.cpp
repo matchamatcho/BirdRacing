@@ -6,6 +6,9 @@
 #include "Kismet/KismetSystemLibrary.h" //追加
 #include "GameFramework/CharacterMovementComponent.h" //追加
 #include <string>
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+
 
 
 // Sets default values
@@ -17,8 +20,20 @@ AMyBird::AMyBird()
 	// サウンドコンポーネントを作成し、アタッチする
 	SoundComponent = CreateDefaultSubobject<UBirdSoundComponent>(TEXT("SoundComponent"));
 
+	// ブーストエフェクトコンポーネントの作成
+	BoostEffect = CreateDefaultSubobject<UNiagaraComponent>(TEXT("BoostEffect"));
+	BoostEffect->SetupAttachment(RootComponent);
+	BoostEffect->bAutoActivate = false; // 初期状態では非アクティブ
+	if (!BoostEffect)
+	{
+		UKismetSystemLibrary::PrintString(this, "ERROR: BoostEffect component is NULL!", true, true, FColor::Red, 10.f, TEXT("None"));
 
+	}
+	else
+	{
+		UKismetSystemLibrary::PrintString(this, "NOT ERROR: BoostEffect component is NULL!", true, true, FColor::Red, 10.f, TEXT("None"));
 
+	}
 
 }
 
@@ -58,6 +73,7 @@ void AMyBird::MoveForword(float DeltaTime)
 	{
 		if (BrakeCharge < MaxBrakeCharge && (BrakeCharge + DeltaTime) >= MaxBrakeCharge) {
 			UKismetSystemLibrary::PrintString(this, "ChargeMax!!", true, true, FColor::Cyan, 2.f, TEXT("None"));
+			m_maxCharged = true;
 		}
 		// ブレーキ中はチャージを溜める
 		BrakeCharge = FMath::Min(BrakeCharge + DeltaTime, MaxBrakeCharge);
@@ -106,19 +122,18 @@ void AMyBird::StartBrake()
 	// サウンドコンポーネント経由でサウンドを再生
 	if (SoundComponent)
 	{
-		SoundComponent->PlaySound(TEXT("Charge")); // ""という名前でサウンドを再生
+		//SoundComponent->PlaySound(TEXT("Charge")); // ""という名前でサウンドを再生
 		UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
-	else {
+	else 
+	{
 		UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
-
 	}
 }
 
 // ブレーキ解除時に呼び出される関数
 void AMyBird::ReleaseBrake()
 {
-
 	bIsBraking = false;
 
 	// チャージ量に基づいてブースト力を計算
@@ -134,12 +149,23 @@ void AMyBird::ReleaseBrake()
 	// サウンドコンポーネント経由でサウンドを再生
 	if (SoundComponent)
 	{
-		SoundComponent->PlaySound(TEXT("Boost")); // "Boost"という名前でサウンドを再生
+		if(m_maxCharged)
+		{
+			SoundComponent->PlaySound(TEXT("Boost")); // "Boost"という名前でサウンドを再生
+			// エフェクトを再生
+			if (BoostEffect)
+			{
+				BoostEffect->Activate(true);
+				UKismetSystemLibrary::PrintString(this, "BoostEffect Activated!", true, true, FColor::Green, 2.f, TEXT("None"));
+
+			}
+		}
+		m_maxCharged = false;
 		UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
-	else {
+	else 
+	{
 		UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
-		
 	}
 }
 
