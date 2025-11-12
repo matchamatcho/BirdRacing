@@ -122,7 +122,7 @@ void AMyBird::StartBrake()
 	// サウンドコンポーネント経由でサウンドを再生
 	if (SoundComponent)
 	{
-		//SoundComponent->PlaySound(TEXT("Charge")); // ""という名前でサウンドを再生
+		SoundComponent->PlaySound(TEXT("Charge")); // ""という名前でサウンドを再生
 		//UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 	else 
@@ -228,5 +228,11 @@ void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyBird::AddCoin(int32 Amount)
 {
+	// サウンドコンポーネント経由でサウンドを再生
+	if (SoundComponent)
+	{
+		SoundComponent->PlaySound(TEXT("GetCoin")); // ""という名前でサウンドを再生
+		//UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	}
 	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GetCoin: %d"), Amount), true, true, FColor::Cyan, 2.f, TEXT("None"));
 }
