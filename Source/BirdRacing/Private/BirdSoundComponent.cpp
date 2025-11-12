@@ -36,7 +36,7 @@ void UBirdSoundComponent::PlaySound(FName SoundName)
 	else {
 		UKismetSystemLibrary::PrintString(this, "Sound not find", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
-	DebugPrintSoundMapKeys();
+	//DebugPrintSoundMapKeys();
 }
 
 void UBirdSoundComponent::DebugPrintSoundMapKeys()
