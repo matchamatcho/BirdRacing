@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "C_ITEMS.h"
-#include "C_COIN_SPONNER.h"
 #include "C_ITEMS_COIN.generated.h"
 
 
@@ -23,14 +22,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item|Effect")
 	int32 CoinValue;
 
-	UPROPERTY()
-	class AC_COIN_SPONNER* m_OwnerSpawner;
-
-	virtual void ApplyEffectToPlayer(AActor* Target) override;
-	virtual void ApplyToManager() override;
-	// C_ITEMS_COIN.h ‚É’Ç‰Á
-public:
-	void SetOwnerSpawner(AC_COIN_SPONNER* Spawner) { m_OwnerSpawner = Spawner; }
+	virtual void ApplyEffectToPlayer(AActor* Target);
 
 	
 };

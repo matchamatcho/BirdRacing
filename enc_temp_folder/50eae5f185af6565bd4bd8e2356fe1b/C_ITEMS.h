@@ -26,9 +26,6 @@ protected:
 	// 子クラスでオーバーライドする効果適用関数
 		virtual void ApplyEffectToPlayer(AActor * Target);
 
-	//managerクラスに知らせる
-		virtual void ApplyToManager();
-
 	// オーバーラップ時に呼ばれる関数
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

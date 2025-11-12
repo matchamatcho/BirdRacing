@@ -16,7 +16,7 @@ AC_ITEMS::AC_ITEMS()
 void AC_ITEMS::BeginPlay()
 {
 	Super::BeginPlay();
-	//UKismetSystemLibrary::PrintString(this, "-------GAMESTART-----------", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	UKismetSystemLibrary::PrintString(this, "-------GAMESTART-----------", true, true, FColor::Cyan, 2.f, TEXT("None"));
 
 	// オーバーラップイベントをバインド
 	AC_ITEMS::BindOverlapEvents();
@@ -88,7 +88,6 @@ void AC_ITEMS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* 
 	{
 		// 効果を適用
 		ApplyEffectToPlayer(OtherActor);
-		ApplyToManager();
 
 	}
 	UKismetSystemLibrary::PrintString(this,"Overlap", true, true, FColor::Cyan, 2.f, TEXT("None"));
@@ -96,9 +95,5 @@ void AC_ITEMS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* 
 void AC_ITEMS::ApplyEffectToPlayer(AActor* Target)
 {
 	// 基底クラスでは何もしない(子クラスでオーバーライド)
-}
-void AC_ITEMS::ApplyToManager()
-{
-
 }
 

@@ -26,7 +26,7 @@ AMyBird::AMyBird()
 	BoostEffect->bAutoActivate = false; // 初期状態では非アクティブ
 	if (!BoostEffect)
 	{
-		//UKismetSystemLibrary::PrintString(this, "ERROR: BoostEffect component is NULL!", true, true, FColor::Red, 10.f, TEXT("None"));
+		UKismetSystemLibrary::PrintString(this, "ERROR: BoostEffect component is NULL!", true, true, FColor::Red, 10.f, TEXT("None"));
 
 	}
 	else
@@ -123,11 +123,11 @@ void AMyBird::StartBrake()
 	if (SoundComponent)
 	{
 		//SoundComponent->PlaySound(TEXT("Charge")); // ""という名前でサウンドを再生
-		//UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 	else 
 	{
-		//UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 }
 
@@ -161,11 +161,11 @@ void AMyBird::ReleaseBrake()
 			}
 		}
 		m_maxCharged = false;
-		//UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 	else 
 	{
-		//UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		UKismetSystemLibrary::PrintString(this, "notplaysound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 }
 
