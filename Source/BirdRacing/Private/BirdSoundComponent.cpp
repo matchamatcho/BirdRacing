@@ -27,7 +27,7 @@ void UBirdSoundComponent::PlaySound(FName SoundName)
 		{
 			// オーナーアクターの位置でサウンドを再生
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), *FoundSound, GetOwner()->GetActorLocation());
-			UKismetSystemLibrary::PrintString(this, "UBirdSoundComponent::PlaySound", true, true, FColor::Cyan, 2.f, TEXT("None"));
+			//UKismetSystemLibrary::PrintString(this, "UBirdSoundComponent::PlaySound", true, true, FColor::Cyan, 2.f, TEXT("None"));
 		}
 		else {
 			UKismetSystemLibrary::PrintString(this, "NOT:UBirdSoundComponent::PlaySound", true, true, FColor::Cyan, 2.f, TEXT("None"));
@@ -47,11 +47,11 @@ void UBirdSoundComponent::DebugPrintSoundMapKeys()
 		return;
 	}
 
-	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("SoundMap has %d entries:"), SoundMap.Num()), true, true, FColor::Yellow, 5.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("SoundMap has %d entries:"), SoundMap.Num()), true, true, FColor::Yellow, 5.f, TEXT("None"));
 
 	for (const auto& Pair : SoundMap)
 	{
 		FString SoundAssetName = Pair.Value ? Pair.Value->GetName() : TEXT("NULL");
-		UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("  Key: '%s' -> Sound: %s"), *Pair.Key.ToString(), *SoundAssetName), true, true, FColor::Cyan, 5.f, TEXT("None"));
+		//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("  Key: '%s' -> Sound: %s"), *Pair.Key.ToString(), *SoundAssetName), true, true, FColor::Cyan, 5.f, TEXT("None"));
 	}
 }

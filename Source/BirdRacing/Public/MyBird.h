@@ -87,6 +87,7 @@ private:
 	//float MaxBrakeCharge = 0.5f; // 最大チャージ時間（秒）
 	//float BoostImpulse = 5000.0f; // ブースト時の力
 	bool m_maxCharged = false;
+	int32 m_myCoin = 0;
 
 
 

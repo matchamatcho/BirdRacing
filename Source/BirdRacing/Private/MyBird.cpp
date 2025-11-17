@@ -72,7 +72,7 @@ void AMyBird::MoveForword(float DeltaTime)
 	if (bIsBraking)
 	{
 		if (BrakeCharge < MaxBrakeCharge && (BrakeCharge + DeltaTime) >= MaxBrakeCharge) {
-			UKismetSystemLibrary::PrintString(this, "ChargeMax!!", true, true, FColor::Cyan, 2.f, TEXT("None"));
+			//UKismetSystemLibrary::PrintString(this, "ChargeMax!!", true, true, FColor::Cyan, 2.f, TEXT("None"));
 			m_maxCharged = true;
 		}
 		// ブレーキ中はチャージを溜める
@@ -117,7 +117,7 @@ void AMyBird::StartBrake()
 {
 	bIsBraking = true;
 	BrakeCharge = 0.0f; // チャージをリセット
-	UKismetSystemLibrary::PrintString(this, "chargteStart-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, "chargteStart-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 
 	// サウンドコンポーネント経由でサウンドを再生
 	if (SoundComponent)
@@ -156,7 +156,7 @@ void AMyBird::ReleaseBrake()
 			if (BoostEffect)
 			{
 				BoostEffect->Activate(true);
-				UKismetSystemLibrary::PrintString(this, "BoostEffect Activated!", true, true, FColor::Green, 2.f, TEXT("None"));
+				//UKismetSystemLibrary::PrintString(this, "BoostEffect Activated!", true, true, FColor::Green, 2.f, TEXT("None"));
 
 			}
 		}
@@ -228,11 +228,13 @@ void AMyBird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyBird::AddCoin(int32 Amount)
 {
+
+	m_myCoin += Amount;
 	// サウンドコンポーネント経由でサウンドを再生
 	if (SoundComponent)
 	{
 		SoundComponent->PlaySound(TEXT("GetCoin")); // ""という名前でサウンドを再生
 		//UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
-	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GetCoin: %d"), Amount), true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GetCoin: %d,total:%d"), Amount,m_myCoin), true, true, FColor::Cyan, 2.f, TEXT("None"));
 }

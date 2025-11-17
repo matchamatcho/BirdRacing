@@ -31,8 +31,7 @@ void AC_ITEMS::BindOverlapEvents()
 
 	if (PrimitiveComponents.Num() == 0)
 	{
-		UKismetSystemLibrary::PrintString(this, TEXT("WARNING: No PrimitiveComponents found!"),
-			true, true, FColor::Red, 5.f);
+		//UKismetSystemLibrary::PrintString(this, TEXT("WARNING: No PrimitiveComponents found!"),	true, true, FColor::Red, 5.f);
 		return;
 	}
 
@@ -49,20 +48,16 @@ void AC_ITEMS::BindOverlapEvents()
 				(int32)Component->GetCollisionEnabled(),
 				(int32)Component->GetCollisionObjectType()
 			);
-			UKismetSystemLibrary::PrintString(this, CollisionInfo, true, true, FColor::Yellow, 5.f);
+			//UKismetSystemLibrary::PrintString(this, CollisionInfo, true, true, FColor::Yellow, 5.f);
 
 			if (Component->GetGenerateOverlapEvents())
 			{
 				Component->OnComponentBeginOverlap.AddDynamic(this, &AC_ITEMS::OnOverlapBegin);
-				UKismetSystemLibrary::PrintString(this,
-					FString::Printf(TEXT("Bound overlap event to: %s"), *Component->GetName()),
-					true, true, FColor::Green, 2.f);
+				//UKismetSystemLibrary::PrintString(this,FString::Printf(TEXT("Bound overlap event to: %s"), *Component->GetName()),true, true, FColor::Green, 2.f);
 
 				// Pawnチャンネルへのレスポンスを確認
 				ECollisionResponse PawnResponse = Component->GetCollisionResponseToChannel(ECC_Pawn);
-				UKismetSystemLibrary::PrintString(this,
-					FString::Printf(TEXT("  Response to Pawn: %d (2=Overlap)"), (int32)PawnResponse),
-					true, true, FColor::Orange, 3.f);
+				//UKismetSystemLibrary::PrintString(this,FString::Printf(TEXT("  Response to Pawn: %d (2=Overlap)"), (int32)PawnResponse),true, true, FColor::Orange, 3.f);
 			}
 			else
 			{
@@ -91,7 +86,7 @@ void AC_ITEMS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* 
 		ApplyToManager();
 
 	}
-	UKismetSystemLibrary::PrintString(this,"Overlap", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this,"Overlap", true, true, FColor::Cyan, 2.f, TEXT("None"));
 }
 void AC_ITEMS::ApplyEffectToPlayer(AActor* Target)
 {
