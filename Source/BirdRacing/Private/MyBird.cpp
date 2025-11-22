@@ -26,7 +26,7 @@ AMyBird::AMyBird()
 	BoostEffect->bAutoActivate = false; // 初期状態では非アクティブ
 	if (!BoostEffect)
 	{
-		//UKismetSystemLibrary::PrintString(this, "ERROR: BoostEffect component is NULL!", true, true, FColor::Red, 10.f, TEXT("None"));
+		UKismetSystemLibrary::PrintString(this, "ERROR: BoostEffect component is NULL!", true, true, FColor::Red, 10.f, TEXT("None"));
 
 	}
 	else
@@ -135,6 +135,12 @@ void AMyBird::StartBrake()
 void AMyBird::ReleaseBrake()
 {
 	bIsBraking = false;
+
+	// チャージ音を停止
+	if (SoundComponent)
+	{
+		SoundComponent->StopSound(TEXT("Charge"));
+	}
 
 	// チャージ量に基づいてブースト力を計算
 	const float BoostScale = FMath::Clamp(BrakeCharge / MaxBrakeCharge, 0.0f, 1.0f);

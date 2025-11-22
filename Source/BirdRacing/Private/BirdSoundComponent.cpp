@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Sound/SoundBase.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values for this component's properties
 UBirdSoundComponent::UBirdSoundComponent()
@@ -25,18 +26,56 @@ void UBirdSoundComponent::PlaySound(FName SoundName)
 	{
 		if (*FoundSound)
 		{
-			// オーナーアクターの位置でサウンドを再生
-			UGameplayStatics::PlaySoundAtLocation(GetWorld(), *FoundSound, GetOwner()->GetActorLocation());
-			//UKismetSystemLibrary::PrintString(this, "UBirdSoundComponent::PlaySound", true, true, FColor::Cyan, 2.f, TEXT("None"));
+			// 既に同じ名前のサウンドが再生中なら停止
+			if (UAudioComponent** ExistingComponent = ActiveAudioComponents.Find(SoundName))
+			{
+				if (*ExistingComponent && (*ExistingComponent)->IsPlaying())
+				{
+					(*ExistingComponent)->Stop();
+				}
+			}
+
+			// オーディオコンポーネントを作成して再生
+			UAudioComponent* AudioComp = UGameplayStatics::SpawnSoundAtLocation(
+				GetWorld(), 
+				*FoundSound, 
+				GetOwner()->GetActorLocation(),
+				FRotator::ZeroRotator,
+				1.0f,
+				1.0f,
+				0.0f,
+				nullptr,
+				nullptr,
+				true // bAutoDestroy = true
+			);
+
+			if (AudioComp)
+			{
+				ActiveAudioComponents.Add(SoundName, AudioComp);
+			}
 		}
-		else {
+		else 
+		{
 			UKismetSystemLibrary::PrintString(this, "NOT:UBirdSoundComponent::PlaySound", true, true, FColor::Cyan, 2.f, TEXT("None"));
 		}
 	}
-	else {
+	else 
+	{
 		UKismetSystemLibrary::PrintString(this, "Sound not find", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
-	//DebugPrintSoundMapKeys();
+}
+
+void UBirdSoundComponent::StopSound(FName SoundName)
+{
+	// アクティブなオーディオコンポーネントを検索
+	if (UAudioComponent** FoundComponent = ActiveAudioComponents.Find(SoundName))
+	{
+		if (*FoundComponent && (*FoundComponent)->IsPlaying())
+		{
+			(*FoundComponent)->Stop();
+		}
+		ActiveAudioComponents.Remove(SoundName);
+	}
 }
 
 void UBirdSoundComponent::DebugPrintSoundMapKeys()
