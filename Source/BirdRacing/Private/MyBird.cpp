@@ -242,5 +242,5 @@ void AMyBird::AddCoin(int32 Amount)
 		SoundComponent->PlaySound(TEXT("GetCoin")); // ""という名前でサウンドを再生
 		//UKismetSystemLibrary::PrintString(this, "plausound-----", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
-	//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GetCoin: %d,total:%d"), Amount,m_myCoin), true, true, FColor::Cyan, 2.f, TEXT("None"));
+	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GetCoin: %d,total:%d"), Amount,m_myCoin), true, true, FColor::Cyan, 2.f, TEXT("None"));
 }
