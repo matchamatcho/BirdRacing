@@ -75,6 +75,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Effects", meta = (AllowPrivateAccess = "true"))
 	UNiagaraComponent* BoostEffect;
 
+	// 現在のコイン数を取得
+	UFUNCTION(BlueprintPure, Category = "Coin")
+	int32 GetCoin() const { return m_myCoin; }
+
 private:
 	float m_forwardSpeed = 100.0f; // 前進速度
 	float m_rotationSpeed = 1.0f; // 回転速度
