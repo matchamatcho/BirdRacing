@@ -45,7 +45,7 @@ void AC_GAME_STATE_BASE::Tick(float DeltaSeconds)
 	// ‰æ–Ê‚ÉŽc‚èŽžŠÔ‚ð•\Ž¦
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("Remaining Time: %.1f"), RemainingTime));
+		//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("Remaining Time: %.1f"), RemainingTime));
 	}
 
 	if (RemainingTime <= 0.0f)

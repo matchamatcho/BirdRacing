@@ -32,7 +32,7 @@ void AC_ITEMS_COIN::ApplyToManager()
 	}
 	else
 	{
-		UKismetSystemLibrary::PrintString(this, "COIN SPORNNER NOT FOUND", true, true, FColor::Cyan, 2.f, TEXT("None"));
+		//UKismetSystemLibrary::PrintString(this, "COIN SPORNNER NOT FOUND", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	}
 
 

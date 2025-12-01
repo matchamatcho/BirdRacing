@@ -18,7 +18,7 @@ AC_COIN_SPONNER::AC_COIN_SPONNER()
 void AC_COIN_SPONNER::BeginPlay()
 {
 	Super::BeginPlay();
-	UKismetSystemLibrary::PrintString(this, "C_COIN_SPONNER_BEGINPLAY()", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, "C_COIN_SPONNER_BEGINPLAY()", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	// ゲーム開始時に最大数のコインを一気にスポーン
 	for (int32 i = 0; i < m_MaxCoins; i++)
 	{
@@ -36,7 +36,7 @@ void AC_COIN_SPONNER::Tick(float DeltaTime)
 
 void AC_COIN_SPONNER::OnCoinCollected()
 {
-	UKismetSystemLibrary::PrintString(this, "C_COIN_SPONNER::OnCoinCollected()", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, "C_COIN_SPONNER::OnCoinCollected()", true, true, FColor::Cyan, 2.f, TEXT("None"));
 	m_SpawnedCoins.RemoveAt(0);
 	// 現在のコイン数が最大数未満の場合、新しいコインをスポーン
 	if (m_SpawnedCoins.Num() < m_MaxCoins)
@@ -53,7 +53,7 @@ void AC_COIN_SPONNER::SpawnCoin()
 		UE_LOG(LogTemp, Warning, TEXT("CoinClass is not set in C_COIN_SPONNER!"));
 		return;
 	}
-	UKismetSystemLibrary::PrintString(this, "COIN SPORN", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, "COIN SPORN", true, true, FColor::Cyan, 2.f, TEXT("None"));
 
 	// ランダムな位置を取得
 	FVector SpawnLocation = GetRandomSpawnLocation();
@@ -72,10 +72,7 @@ void AC_COIN_SPONNER::SpawnCoin()
 		m_SpawnedCoins.Add(SpawnedCoin);
 		//UE_LOG(LogTemp, Log, TEXT("Coin spawned at location: %s"), *SpawnLocation.ToString());
 		// スポーン位置を画面に表示
-		UKismetSystemLibrary::PrintString(this,
-			FString::Printf(TEXT("Coin spawn at: X=%.1f Y=%.1f Z=%.1f"),
-				SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z),
-			true, true, FColor::Green, 2.f);
+		//UKismetSystemLibrary::PrintString(this,FString::Printf(TEXT("Coin spawn at: X=%.1f Y=%.1f Z=%.1f"),SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z),true, true, FColor::Green, 2.f);
 		// キャストして参照を設定
 		AC_ITEMS_COIN* Coin = Cast<AC_ITEMS_COIN>(SpawnedCoin);
 		if (Coin)

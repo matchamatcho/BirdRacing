@@ -41,13 +41,7 @@ void AC_ITEMS::BindOverlapEvents()
 		if (Component)
 		{
 			// コリジョン設定の詳細をログ出力
-			FString CollisionInfo = FString::Printf(
-				TEXT("Component: %s\n  GenerateOverlap: %s\n  CollisionEnabled: %d\n  ObjectType: %d"),
-				*Component->GetName(),
-				Component->GetGenerateOverlapEvents() ? TEXT("YES") : TEXT("NO"),
-				(int32)Component->GetCollisionEnabled(),
-				(int32)Component->GetCollisionObjectType()
-			);
+			//FString CollisionInfo = FString::Printf(TEXT("Component: %s\n  GenerateOverlap: %s\n  CollisionEnabled: %d\n  ObjectType: %d"),*Component->GetName(),Component->GetGenerateOverlapEvents() ? TEXT("YES") : TEXT("NO"),(int32)Component->GetCollisionEnabled(),(int32)Component->GetCollisionObjectType());
 			//UKismetSystemLibrary::PrintString(this, CollisionInfo, true, true, FColor::Yellow, 5.f);
 
 			if (Component->GetGenerateOverlapEvents())
