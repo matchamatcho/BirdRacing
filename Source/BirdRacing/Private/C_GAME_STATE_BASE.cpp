@@ -10,13 +10,15 @@ AC_GAME_STATE_BASE::AC_GAME_STATE_BASE()
 	PrimaryActorTick.bCanEverTick = true;
 	RemainingTime = 0.0f;
 	bIsCountingDown = false;
+	CurrentGameState = EGameState::InProgress; // 初期状態
+
 }
 
 void AC_GAME_STATE_BASE::BeginPlay()
 {
 	Super::BeginPlay();
 	AC_GAME_STATE_BASE::StartCountdown();
-	UKismetSystemLibrary::PrintString(this, "---begin game state base---", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, "---begin game state base---", true, true, FColor::Cyan, 2.f, TEXT("None"));
 
 }
 
@@ -24,11 +26,12 @@ void AC_GAME_STATE_BASE::StartCountdown(float TimeLimit)
 {
 	RemainingTime = TimeLimit;
 	bIsCountingDown = true;
+	SetGameState(EGameState::InProgress); // 状態をゲーム進行中に変更
+
 }
 void AC_GAME_STATE_BASE::StartCountdown()
 {
-	RemainingTime = m_MaxTime;
-	bIsCountingDown = true;
+	StartCountdown(m_MaxTime);
 }
 
 void AC_GAME_STATE_BASE::Tick(float DeltaSeconds)
@@ -42,17 +45,28 @@ void AC_GAME_STATE_BASE::Tick(float DeltaSeconds)
 
 	RemainingTime -= DeltaSeconds;
 
-	// 画面に残り時間を表示
-	if (GEngine)
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("Remaining Time: %.1f"), RemainingTime));
-	}
-
 	if (RemainingTime <= 0.0f)
 	{
 		RemainingTime = 0.0f;
 		bIsCountingDown = false;
 		OnTimeUp.Broadcast();
+		SetGameState(EGameState::TimeUp); // 状態をタイムアップに変更
+
 	}
 }
 
+// ゲーム状態を設定する関数
+void AC_GAME_STATE_BASE::SetGameState(EGameState NewState)
+{
+	CurrentGameState = NewState;
+}
+
+void AC_GAME_STATE_BASE::AddRemainingTime(float AdditionalTime)
+{
+	if (bIsCountingDown)
+	{
+		RemainingTime += AdditionalTime;
+		// 最大時間を超えないようにクランプ（オプション）
+		//RemainingTime = FMath::Min(RemainingTime, m_MaxTime);
+	}
+}

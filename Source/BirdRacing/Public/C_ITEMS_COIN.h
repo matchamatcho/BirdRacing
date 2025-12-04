@@ -23,6 +23,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item|Effect")
 	int32 CoinValue;
 
+	// コイン取得時に追加される時間（秒）
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Coin Settings")
+	float TimeBonus = 3.0f;
+
 	UPROPERTY()
 	class AC_COIN_SPONNER* m_OwnerSpawner;
 

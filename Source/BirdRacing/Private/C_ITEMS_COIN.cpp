@@ -3,12 +3,15 @@
 
 #include "C_ITEMS_COIN.h"
 #include "MyBird.h"
+#include "C_GAME_STATE_BASE.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h" //追加
 
 
 AC_ITEMS_COIN::AC_ITEMS_COIN() 
 {
 	CoinValue = 1;
+	TimeBonus = 3.0f; // デフォルトで3秒追加
 
 }
 
@@ -18,6 +21,16 @@ void AC_ITEMS_COIN::ApplyEffectToPlayer(AActor* Target)
 	if (Player)
 	{
 		Player->AddCoin(CoinValue);
+
+
+		// GameStateを取得して時間を追加
+		AC_GAME_STATE_BASE* GameState = Cast<AC_GAME_STATE_BASE>(GetWorld()->GetGameState());
+		if (GameState)
+		{
+			GameState->AddRemainingTime(TimeBonus);
+			//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("Time Added: +%.1f seconds"), TimeBonus), true, true, FColor::Green, 2.f, TEXT("None"));
+		}
+
 		Destroy();
 
 	}
