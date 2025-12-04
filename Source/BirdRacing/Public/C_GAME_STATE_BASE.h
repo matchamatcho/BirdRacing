@@ -50,6 +50,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Game")
 	FOnTimeUp OnTimeUp;
 
+	// Žc‚èŽžŠÔ‚ð’Ç‰Á‚·‚é
+	UFUNCTION(BlueprintCallable, Category = "Game")
+	void AddRemainingTime(float AdditionalTime);
+
 	virtual void Tick(float DeltaSeconds) override;
 
 protected:

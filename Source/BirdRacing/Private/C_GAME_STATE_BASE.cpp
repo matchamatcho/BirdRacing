@@ -60,3 +60,13 @@ void AC_GAME_STATE_BASE::SetGameState(EGameState NewState)
 {
 	CurrentGameState = NewState;
 }
+
+void AC_GAME_STATE_BASE::AddRemainingTime(float AdditionalTime)
+{
+	if (bIsCountingDown)
+	{
+		RemainingTime += AdditionalTime;
+		// 最大時間を超えないようにクランプ（オプション）
+		//RemainingTime = FMath::Min(RemainingTime, m_MaxTime);
+	}
+}
