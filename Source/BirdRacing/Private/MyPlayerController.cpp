@@ -3,6 +3,8 @@
 
 #include "MyPlayerController.h"
 #include "C_GAME_STATE_BASE.h"
+#include "Kismet/KismetSystemLibrary.h" //追加
+
 #include "Kismet/GameplayStatics.h"
 
 AMyPlayerController::AMyPlayerController()
@@ -24,6 +26,8 @@ void AMyPlayerController::SetupInputComponent()
 	
 	// Rキーにリスタート機能をバインド
 	InputComponent->BindAction("Restart", IE_Pressed, this, &AMyPlayerController::RestartLevel);
+	// Tキーにステージセレクトに戻る機能をバインド
+	InputComponent->BindAction("ReturnToStageSelect", IE_Pressed, this, &AMyPlayerController::ReturnToStageSelect);
 }
 
 void AMyPlayerController::RestartLevel()
@@ -39,3 +43,13 @@ void AMyPlayerController::RestartLevel()
 	}
 }
 
+void AMyPlayerController::ReturnToStageSelect()
+{
+	//UKismetSystemLibrary::PrintString(this, "stageselect", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	// GameStateがタイムアップ状態の場合のみステージセレクトに戻る
+	if (CachedGameState && CachedGameState->GetCurrentGameState() == EGameState::TimeUp)
+	{
+		// ステージセレクトレベルに遷移
+		UGameplayStatics::OpenLevel(this, StageSelectLevelName);
+	}
+}

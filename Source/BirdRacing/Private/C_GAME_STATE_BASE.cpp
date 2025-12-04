@@ -18,7 +18,7 @@ void AC_GAME_STATE_BASE::BeginPlay()
 {
 	Super::BeginPlay();
 	AC_GAME_STATE_BASE::StartCountdown();
-	UKismetSystemLibrary::PrintString(this, "---begin game state base---", true, true, FColor::Cyan, 2.f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, "---begin game state base---", true, true, FColor::Cyan, 2.f, TEXT("None"));
 
 }
 

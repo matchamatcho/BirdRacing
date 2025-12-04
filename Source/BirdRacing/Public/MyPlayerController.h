@@ -21,9 +21,15 @@ protected:
 	virtual void SetupInputComponent() override;
 	virtual void BeginPlay() override;
 
+	// ステージセレクトレベルの名前
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Level Management")
+	FName StageSelectLevelName = FName(TEXT("SelectStages"));
+
 private:
 	// Rキーでリスタート
 	void RestartLevel();
+
+	void ReturnToStageSelect();
 
 	// GameStateの参照
 	UPROPERTY()
